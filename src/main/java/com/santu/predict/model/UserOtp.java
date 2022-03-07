@@ -7,7 +7,5 @@ public class UserOtp {
 
     private String email;
     private int otp;
-    //private Date generated;
-
 	
 }

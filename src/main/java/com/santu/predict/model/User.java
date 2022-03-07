@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Document(collection = "User")
+@JsonInclude(value = Include.NON_NULL)
 public class User {
 
 	@Transient
@@ -35,6 +38,7 @@ public class User {
     @JsonIgnore
     private long generated;
     private boolean verified;
+    private Account account;
     
 
 }

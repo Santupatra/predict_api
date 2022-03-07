@@ -17,8 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.santu.predict.dao.UserDao;
+import com.santu.predict.mapper.UserMapper;
 import com.santu.predict.model.User;
-import com.santu.predict.model.UserDto;
+import com.santu.predict.model.Registration;
 import com.santu.predict.model.UserOtp;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,9 @@ public class AccessServiceImpl implements UserDetailsService, AccessService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Autowired
 	private SequenceGeneratorService sequenceGeneratorService;
@@ -43,7 +47,7 @@ public class AccessServiceImpl implements UserDetailsService, AccessService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userDao.findByEmail(username);
 		if (user == null) {
-			throw new UsernameNotFoundException("Invalid username or password.");
+			throw new UsernameNotFoundException("Invalid username.");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),user.isVerified(),true,true,true,
 				getAuthority(user));
@@ -59,11 +63,11 @@ public class AccessServiceImpl implements UserDetailsService, AccessService {
 	}
 
 	@Override
-	public User save(UserDto userDto) {
+	public User save(Registration registration) {
 
-		User user = userDto.getUserFromDto();
+		User user = userMapper.getUserFromRegistration(registration);
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
-		User userOnDb = userDao.findByEmail(userDto.getEmail());
+		User userOnDb = userDao.findByEmail(registration.getEmail());
 		if (ObjectUtils.isEmpty(userOnDb)) {
 			sendOtp(user);
 			user.setId(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santu.predict.config.TokenProvider;
 import com.santu.predict.model.LoginUser;
 import com.santu.predict.model.User;
-import com.santu.predict.model.UserDto;
+import com.santu.predict.model.Registration;
 import com.santu.predict.model.UserOtp;
 import com.santu.predict.service.AccessService;
 
@@ -33,7 +33,7 @@ public class AccessController {
     private TokenProvider jwtTokenUtil;
 
     @Autowired
-    private AccessService userService;
+    private AccessService accessService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
@@ -50,13 +50,13 @@ public class AccessController {
     }
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
-    public User saveUser(@RequestBody UserDto userDto){
-        return userService.save(userDto);
+    public User saveUser(@RequestBody Registration userDto){
+        return accessService.save(userDto);
     }
     
     @RequestMapping(value="/verify", method = RequestMethod.POST)
     public User verifyOtp(@RequestBody UserOtp userOtp){
-        return userService.verifyOtp(userOtp);
+        return accessService.verifyOtp(userOtp);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
