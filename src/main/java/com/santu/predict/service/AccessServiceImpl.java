@@ -66,7 +66,7 @@ public class AccessServiceImpl implements UserDetailsService, AccessService {
 		User userOnDb = userDao.findByEmail(userDto.getEmail());
 		if (ObjectUtils.isEmpty(userOnDb)) {
 			sendOtp(user);
-			user.setId(sequenceGeneratorService.generateSequence(user.SEQUENCE_NAME));
+			user.setId(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME));
 		} else {
 			user.setId(userOnDb.getId());
 			sendOtp(user);
