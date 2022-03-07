@@ -18,11 +18,12 @@ import com.santu.predict.config.TokenProvider;
 import com.santu.predict.model.LoginUser;
 import com.santu.predict.model.User;
 import com.santu.predict.model.UserDto;
+import com.santu.predict.model.UserOtp;
 import com.santu.predict.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/access")
 public class UserController {
 
     @Autowired
@@ -49,12 +50,15 @@ public class UserController {
     }
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
-    public User saveUser(@RequestBody UserDto user){
-        return userService.save(user);
+    public User saveUser(@RequestBody UserDto userDto){
+        return userService.save(userDto);
     }
-
-
-
+    
+    @RequestMapping(value="/verify", method = RequestMethod.POST)
+    public User verifyOtp(@RequestBody UserOtp userOtp){
+        return userService.verifyOtp(userOtp);
+    }
+    
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value="/adminping", method = RequestMethod.GET)
     public String adminPing(){

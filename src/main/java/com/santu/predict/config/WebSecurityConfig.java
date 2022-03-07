@@ -30,14 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);//.passwordEncoder(encoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());/////remove password if needed.
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users/authenticate", "/users/register", "/users/register").permitAll()
+                .antMatchers("/access/authenticate", "/access/register", "/access/verify", "/access/resend").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
@@ -46,10 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
-//    @Bean
-//    public BCryptPasswordEncoder encoder(){
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public BCryptPasswordEncoder encoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     @Bean
