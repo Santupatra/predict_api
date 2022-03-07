@@ -19,12 +19,12 @@ import com.santu.predict.model.LoginUser;
 import com.santu.predict.model.User;
 import com.santu.predict.model.UserDto;
 import com.santu.predict.model.UserOtp;
-import com.santu.predict.service.UserService;
+import com.santu.predict.service.AccessService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/access")
-public class UserController {
+public class AccessController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -33,7 +33,7 @@ public class UserController {
     private TokenProvider jwtTokenUtil;
 
     @Autowired
-    private UserService userService;
+    private AccessService userService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {

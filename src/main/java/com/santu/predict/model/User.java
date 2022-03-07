@@ -1,6 +1,5 @@
 package com.santu.predict.model;
 
-import java.util.Date;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;

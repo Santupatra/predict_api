@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service(value = "userService")
 @Slf4j
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class AccessServiceImpl implements UserDetailsService, AccessService {
 
 	@Autowired
 	private UserDao userDao;
