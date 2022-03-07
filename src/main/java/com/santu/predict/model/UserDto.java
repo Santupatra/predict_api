@@ -1,5 +1,7 @@
 package com.santu.predict.model;
 
+import java.util.Set;
+
 import lombok.Data;
 
 @Data
@@ -9,7 +11,7 @@ public class UserDto {
     private String email;
     private String password;
     private String phone;
-    private String role;
+    private Set<Role> roles;
 
     public User getUserFromDto(){
         User user = new User();
@@ -17,7 +19,7 @@ public class UserDto {
         user.setEmail(email);
         user.setPassword(password);
         user.setPhone(phone);
-        user.setRole(role);
+        user.setRoles(roles);
         return user;
     }
     

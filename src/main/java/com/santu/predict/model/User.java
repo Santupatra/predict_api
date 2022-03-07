@@ -1,5 +1,7 @@
 package com.santu.predict.model;
 
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,6 +27,6 @@ public class User {
 	private String email;
 	private String password;
     private String phone;
-    private String role;
+    private Set<Role> roles;
 
 }
