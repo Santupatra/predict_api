@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.santu.predict.config.TokenProvider;
 import com.santu.predict.model.LoginUser;
 import com.santu.predict.model.User;
-import com.santu.predict.model.UserDto;
-import com.santu.predict.service.UserService;
+import com.santu.predict.model.Registration;
+import com.santu.predict.model.UserOtp;
+import com.santu.predict.service.AccessService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/access")
+public class AccessController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -32,7 +33,7 @@ public class UserController {
     private TokenProvider jwtTokenUtil;
 
     @Autowired
-    private UserService userService;
+    private AccessService accessService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
@@ -49,19 +50,22 @@ public class UserController {
     }
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
-    public User saveUser(@RequestBody UserDto user){
-        return userService.save(user);
+    public User saveUser(@RequestBody Registration userDto){
+        return accessService.save(userDto);
     }
-
-
-
-    //@PreAuthorize("hasRole('ADMIN')")
+    
+    @RequestMapping(value="/verify", method = RequestMethod.POST)
+    public User verifyOtp(@RequestBody UserOtp userOtp){
+        return accessService.verifyOtp(userOtp);
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value="/adminping", method = RequestMethod.GET)
     public String adminPing(){
         return "Only Admins Can Read This";
     }
 
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value="/userping", method = RequestMethod.GET)
     public String userPing(){
         return "Any User Can Read This";
