@@ -1,4 +1,4 @@
-package com.santu.predict.service;
+package com.santu.predict.service.impl;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -21,10 +21,11 @@ import com.santu.predict.mapper.UserMapper;
 import com.santu.predict.model.User;
 import com.santu.predict.model.Registration;
 import com.santu.predict.model.UserOtp;
+import com.santu.predict.service.AccessService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Service(value = "userService")
+@Service(value = "accessService")
 @Slf4j
 public class AccessServiceImpl implements UserDetailsService, AccessService {
 
@@ -98,7 +99,7 @@ public class AccessServiceImpl implements UserDetailsService, AccessService {
 		int otp = 100000 + random.nextInt(900000);
 		user.setOtp(otp);
 		user.setGenerated(System.currentTimeMillis());
-		sendEmail(user.getEmail(), otp);
+		//sendEmail(user.getEmail(), otp);
 	}
 
 	private void sendEmail(String email, int otp) {

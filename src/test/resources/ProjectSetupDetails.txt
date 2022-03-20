@@ -1,1 +1,3 @@
- Project -> Run As -> Run Configurations -> Arguments -> VM Arguments, add -> -Djdk.tls.client.protocols=TLSv1.2
+ Project -> Run As -> Run Configurations -> Arguments -> VM Arguments, add -> 
+ -Djdk.tls.client.protocols=TLSv1.2
+ 
